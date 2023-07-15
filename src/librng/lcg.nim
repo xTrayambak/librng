@@ -5,7 +5,7 @@ type LinearCongruentialGenerator* = ref object of Generator
  mult: uint64
  incr: uint64
 
-method next*(lcg: LinearCongruentialGenerator): uint64 =
+method next*(lcg: LinearCongruentialGenerator): uint64 {.inline.} =
  var res = ((lcg.seed * lcg.mult) + lcg.incr) mod lcg.modulus
  lcg.seed = res
 

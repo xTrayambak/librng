@@ -2,7 +2,7 @@ import generator
 
 type Splitmix64* = ref object of Generator
 
-method next*(sm64: Splitmix64): uint64 =
+method next*(sm64: Splitmix64): uint64 {.inline.} =
  var z = sm64.seed
  z = (z xor (z shl 30))
  z = (z xor (z shl 27))

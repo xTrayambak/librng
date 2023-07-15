@@ -2,7 +2,7 @@ import generator, std/bitops
 
 type Xoroshiro128* = ref object of Generator
 
-method next*(xoroshiro: Xoroshiro128): uint64 =
+method next*(xoroshiro: Xoroshiro128): uint64 {.inline.} =
  let s0 = xoroshiro.state[0]
  var s1 = xoroshiro.state[1]
  let res = s0 + s1
