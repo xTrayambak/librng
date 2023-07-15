@@ -1,4 +1,4 @@
-import librng/[xoroshiro, splitmix64, generator, lcg], 
+import librng/[xoroshiro, splitmix64, generator, lcg, mersenne_twister], 
     std/[times, tables, strformat]
 
 type
@@ -6,6 +6,7 @@ type
     rngXoroshiro
     rngSplitmix64
     rngLCG
+    rngMersenneTwister
 
   RNG* = ref object of RootObj
     seed*: uint64
@@ -35,6 +36,10 @@ proc gen(rng: RNG, genAlgo: RNGAlgorithm): uint64 =
         rng.gen(rngSplitmix64),
         rng.gen(rngSplitmix64)
       )
+    elif genAlgo == rngMersenneTwister:
+      gen = newMersenneTwister(
+        rng.gen(rngSplitmix64)
+      )
 
     rng.generators[genAlgo] = gen
     rng.gen(genAlgo)
@@ -44,15 +49,18 @@ proc randint*(rng: RNG, range: int = int.high,
             ): int =
   # Article on generating random numbers within a range
   # https://www.pcg-random.org/posts/bounded-rands.html
-  case genAlgo:
-    of rngSplitmix64:
-      cast[int](rng.gen(genAlgo)) mod range
-    of rngXoroshiro:
-      cast[int](rng.gen(genAlgo)) mod range
-    of rngLCG:
-      cast[int](rng.gen(genAlgo)) mod range
-    else:
-      return 0
+  cast[int](rng.gen(genAlgo)) mod range
+
+proc choice*[T](rng: RNG, arr: seq[T], 
+  genAlgo: RNGAlgorithm = rngXoroshiro
+  ): T =
+  var idx = rng.randint(arr.len, genAlgo)
+
+  # This is a bad way of doing this!
+  while idx < 0:
+    idx = rng.randint(arr.len, genAlgo)
+
+  arr[idx]
 
 proc newRNG*(seed: uint64 = 0): RNG =
   var realSeed: uint64 = seed
