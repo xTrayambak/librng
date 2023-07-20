@@ -6,6 +6,11 @@ librng is a 100% native Nim pseudo-random-number-generation library.
 It also does not support multiple PRNG algorithms, just Xoroshiro128+.
 librng is built with adding more algorithms easily in mind. Just add a new type that inherits from `Generator` and implement a `next` function, and you're good to go!
 
+# Installation
+```bash
+$ nimble install librng
+```
+
 # How fast is it?
 librng is generally as fast as std/random, sometimes faster. You can try `tests/benchmark.nim` for yourself as the speeds are mostly CPU-dependant.
 A small note: librng implements Xoroshiro128 whilst std/random uses Xoroshiro128+ \
