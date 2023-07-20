@@ -18,4 +18,4 @@ All the times are in seconds.
 | 8888888    | 0.79794369 | 0.6654346 |
 
 # Examples
-For now, use the tests as examples as librng is a relatively simple library.
+All examples are in `examples/`
