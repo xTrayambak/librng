@@ -1,6 +1,17 @@
 # librng -- RNG for dummies in Nim
 librng is a 100% native Nim pseudo-random-number-generation library.
 
+# RNG Algorithms supported
+| Algorithm        | Status |
+| ---------        | ------ |
+| Xoroshiro128     | yes    |
+| LCG              | yes    |
+| Mersenne Twister | yes    |
+| Marsaglia 69069  | yes    |
+| Lehmer64         | yes    |
+| Xoroshiro128+    | no     |
+| Xoroshiro256     | no     |
+
 # Why?
 `std/random` is an "impure" library (Nim's terminology for libraries that aren't writing their core purpose in Nim)
 It also does not support multiple PRNG algorithms, just Xoroshiro128+.
