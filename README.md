@@ -15,12 +15,12 @@ $ nimble install librng
 librng is generally as fast as std/random, sometimes faster. You can try `tests/benchmark.nim` for yourself as the speeds are mostly CPU-dependant.
 A small note: librng implements Xoroshiro128 whilst std/random uses Xoroshiro128+ \
 All the times are in seconds.
-| Iterations | std/random | librng    |
-| ---------- | ---------- | --------- |
-| 4          | 1.93       | 0.0001129 |
-| 64         | 7.61       | 0.0003347 |
-| 4096       | 0.00046455 | 0.0039513 |
-| 8888888    | 0.79794369 | 0.6654346 |
+| Iterations | std/random | librng    | Winner     |
+| ---------- | ---------- | --------- | ---------- |
+| 4          | 2.71       | 0.0001711 | librng     |
+| 64         | 4.02       | 0.0001714 | librng     |
+| 4096       | 0.00067011 | 0.0037226 | std/random |
+| 8192       | 0.00126661 | 0.0060302 | std/random |
 
 # Examples
 All examples are in `examples/`

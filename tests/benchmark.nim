@@ -30,33 +30,26 @@ else:
  echo "warning: no algorithm specified, librng will use Xoroshiro128"
  algo = rngXoroshiro
  
-proc getRandStd: seq[int] =
+proc getRandStd =
  randomize()
- var res: seq[int] = @[]
  
  for _ in 0..testFreq:
-  res.add(rand(32))
+  discard rand(32)
 
- res
-
-proc getRandLibrng: seq[int] =
- var
-  res: seq[int] = @[]
-  rng = newRNG()
+proc getRandLibrng =
+ var rng = newRNG()
 
  for _ in 0..testFreq:
-  res.add(rng.randint())
-
- res
+  discard rng.randint(32)
 
 echo fmt"Benchmark (iterations={testFreq})"
 
 let startTimeStd = cpuTime()
-discard getRandStd()
+getRandStd()
 let timeTakenStd = cpuTime() - startTimeStd
 
 let startTimeLibrng = cpuTime()
-discard getRandLibrng()
+getRandLibrng()
 let timeTakenLibrng = cpuTime() - startTimeLibrng
 
 echo fmt"std/random: {timeTakenStd} seconds"
