@@ -6,9 +6,9 @@ import generator
 const
  NN* = 312
  MM* = 156
- MATRIX_A* = 0xB5026F5AA96619E9
- UM* = 0xFFFFFFFF80000000
- LM* = 0x7FFFFFFF
+ MATRIX_A* = 0xB5026F5AA96619E9'u64
+ UM* = 0xFFFFFFFF80000000'u64
+ LM* = 0x7FFFFFFF'u64
 
 proc temper(x: var uint64): uint64 {.inline.} =
  x = x xor (x shr 29) and 0x5555555555555555'u64
@@ -42,24 +42,24 @@ type MersenneTwister* = ref object of Generator
 proc fillNextState*(mt: MersenneTwister) =
  # WARNING: an unholy amount of type conversions ahead.
  # TODO(xTrayambak): make this more readable.
- for i in 0..NN-MM:
-  let x = 0# (mt.mtState[i].uint64 and UM).uint64 or (mt.mtState[i+1].uint64 and LM.uint64)
-  mt.mtState[i] = cast[uint64](mt.mtState[i+MM].int xor (x shr 1).int xor ((x and 1).int64 * MATRIX_A))
+ for i in 0..NN-MM-1:
+  let x = (mt.mtState[i] and UM) or (mt.mtState[i+1].uint64 and LM.uint64)
+  mt.mtState[i] = cast[uint64](mt.mtState[i+MM].uint64 xor (x shr 1).uint64 xor ((x and 1) * MATRIX_A))
 
- for i in NN-MM..NN-1:
+ for i in NN-MM..NN-2:
   let
-   x = (mt.mtState[i].int64 and UM).uint64 or (mt.mtState[i+1].uint64 and LM)
+   x = (mt.mtState[i] and UM).uint64 or (mt.mtState[i+1].uint64 and LM)
 
   mt.mtState[i] = cast[uint64](
-   mt.mtState[i+MM-NN].int xor (x shr 1).int xor ((x and 1).int64 * MATRIX_A)
+   mt.mtState[i+MM-NN].uint64 xor (x shr 1).uint64 xor ((x and 1).uint64 * MATRIX_A)
   )
 
- let x = (mt.mtState[NN-1].int and UM).uint64 or (mt.mtState[0] and LM)
- mt.mtState[NN-1] = cast[uint64](mt.mtState[MM-1] xor (x shr 1) xor ((x and 1).int64 * MATRIX_A).uint64)
+ let x = (mt.mtState[NN-1] and UM).uint64 or (mt.mtState[0] and LM)
+ mt.mtState[NN-1] = cast[uint64](mt.mtState[MM-1] xor (x shr 1) xor ((x and 1).uint64 * MATRIX_A).uint64)
  mt.idx = 0
 
 method next*(mt: MersenneTwister): uint64 {.inline.} =
- raise newException(GeneratorWorkInProgressDefect, "Mersenne Twister is still work-in-progress. Consider helping out if you want. Sorry!")
+ # raise newException(GeneratorWorkInProgressDefect, "Mersenne Twister is still work-in-progress. Consider helping out if you want. Sorry!")
  if mt.idx == 0:
   raise newException(UninitializedGeneratorDefect, "next() called without initializing generator!")
 
