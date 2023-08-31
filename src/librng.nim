@@ -1,7 +1,8 @@
 import librng/[xoroshiro, splitmix64, generator, lcg, mersenne_twister], 
-    std/[times, tables, strformat]
+    std/[times, tables, strformat, sysrand]
 
 type
+  RNGInitializationDefect* = Defect
   RNGAlgorithm* = enum
     rngXoroshiro
     rngSplitmix64
@@ -64,8 +65,20 @@ proc choice*[T](rng: RNG, arr: seq[T],
 
 proc newRNG*(seed: uint64 = 0): RNG =
  var realSeed: uint64 = seed
- if seed == 0:
-  realSeed = now().second.uint64 + now().minute.uint64
+
+ when defined(librngUseTimeBasedRNG) or defined(js):
+  if seed == 0:
+    realSeed = now().second.uint64 * 1000'u64 + now().minute.uint64 * 2048'u64
+ else:
+  when defined(nimscript):
+   realSeed = cast[uint64](CompileTime.hash)
+  else:
+   var x: array[8, byte]
+   for _ in 0..7:
+    if urandom(x):
+     copyMem(realSeed.addr, x[0].addr, 8)
+    else:
+     raise newException(RNGInitializationDefect, "urandom() syscall failed!")
 
  RNG(seed: realSeed, generators: newTable[RNGAlgorithm, Generator]())
 
