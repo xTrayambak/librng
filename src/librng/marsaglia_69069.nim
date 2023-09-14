@@ -21,7 +21,7 @@ import generator
 
 type Marsaglia69069* = ref object of Generator
 
-method next*(m69069: Marsaglia69069): uint64 =
+method next*(m69069: Marsaglia69069): uint64 {.inline.} =
  let res = 69069 * (m69069.seed - 1) + 1234567
 
  m69069.seed = res

@@ -1,9 +1,8 @@
 import unittest
 
 import librng
-test "rng":
+test "choices":
   var rng = newRNG()
   echo $rng
   let fruits = @["apples", "oranges", "pineapples", "mangoes", "bananas"]
-
-  echo "This is a fruit: " & rng.choice(fruits)
+  let favourite = rng.choice(fruits)

@@ -17,18 +17,27 @@ else:
 
 var algo: RNGAlgorithm
 
-if paramCount() < 2:
+if paramCount() > 1:
  case paramStr(2).toLowerAscii():
-  of "xoroshiro":
-   algo = rngXoroshiro
+  of "xoroshiro128":
+   algo = rngXoroshiro128
+  of "xoroshiro256**":
+   algo = rngXoroshiro256SS
   of "lcg":
    algo = rngLCG
+  of "m69069":
+   echo "nice."
+   algo = rngMarsaglia69069
+  of "lehmer64":
+   algo = rngLehmer64
+  of "mersenne_twister":
+   algo = rngMersenneTwister
   else:
    echo "warning: no valid algorithm specified, librng will use Xoroshiro128"
-   algo = rngXoroshiro
+   algo = rngXoroshiro128
 else:
  echo "warning: no algorithm specified, librng will use Xoroshiro128"
- algo = rngXoroshiro
+ algo = rngXoroshiro128
  
 proc getRandStd =
  randomize()

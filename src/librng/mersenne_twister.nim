@@ -39,7 +39,7 @@ type MersenneTwister* = ref object of Generator
  idx: uint
  mtState: array[NN, uint64]
 
-proc fillNextState*(mt: MersenneTwister) =
+proc fillNextState*(mt: MersenneTwister) {.inline.} =
  # WARNING: an unholy amount of type conversions ahead.
  # TODO(xTrayambak): make this more readable.
  for i in 0..NN-MM-1:

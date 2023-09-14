@@ -1,10 +1,14 @@
-import librng/[xoroshiro, splitmix64, generator, lcg, mersenne_twister], 
+import librng/[xoroshiro128, splitmix64, generator, lcg, mersenne_twister, 
+               marsaglia_69069, lehmer64, xoroshiro256starstar], 
     std/[times, tables, strformat, sysrand]
 
 type
   RNGInitializationDefect* = Defect
   RNGAlgorithm* = enum
-    rngXoroshiro
+    rngXoroshiro128
+    rngXoroshiro256SS
+    rngLehmer64
+    rngMarsaglia69069
     rngSplitmix64
     rngLCG
     rngMersenneTwister
@@ -14,7 +18,7 @@ type
 
     generators: TableRef[RNGAlgorithm, Generator]
 
-proc `$`*(rng: RNG): string =
+proc `$`*(rng: RNG): string {.inline.} =
   fmt"librng generator (seed: {rng.seed}; loaded generators: {rng.generators.len})"
 
 proc gen(rng: RNG, genAlgo: RNGAlgorithm): uint64 =
@@ -25,7 +29,7 @@ proc gen(rng: RNG, genAlgo: RNGAlgorithm): uint64 =
 
   if genAlgo == rngSplitmix64:
    gen = newSplitmix64(rng.seed)
-  elif genAlgo == rngXoroshiro:
+  elif genAlgo == rngXoroshiro128:
     gen = newXoroshiro128(
       rng.gen(rngSplitmix64),
       rng.gen(rngSplitmix64)
@@ -41,19 +45,33 @@ proc gen(rng: RNG, genAlgo: RNGAlgorithm): uint64 =
    gen = newMersenneTwister(
     rng.gen(rngSplitmix64)
    )
-
+  elif genAlgo == rngXoroshiro256SS:
+    gen = newXoroshiro256SS(
+      rng.gen(rngSplitmix64),
+      rng.gen(rngSplitmix64),
+      rng.gen(rngSplitmix64),
+      rng.gen(rngSplitmix64)
+    )
+  elif genAlgo == rngMarsaglia69069:
+    gen = newMarsaglia69069(
+      rng.gen(rngSplitmix64)
+    )
+  elif genAlgo == rngLehmer64:
+    gen = newLehmer64(
+      rng.gen(rngSplitmix64)
+    )
   rng.generators[genAlgo] = gen
   rng.gen(genAlgo)
 
 proc randint*(rng: RNG, range: int = int.high, 
-              genAlgo: RNGAlgorithm = rngXoroshiro
+              genAlgo: RNGAlgorithm = rngXoroshiro128
             ): int =
  # Article on generating random numbers within a range
  # https://www.pcg-random.org/posts/bounded-rands.html
  cast[int](rng.gen(genAlgo)) mod range
 
 proc choice*[T](rng: RNG, arr: seq[T], 
-  genAlgo: RNGAlgorithm = rngXoroshiro
+  genAlgo: RNGAlgorithm = rngXoroshiro128
  ): T =
  var idx = rng.randint(arr.len, genAlgo)
 
