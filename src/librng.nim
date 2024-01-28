@@ -1,9 +1,9 @@
-import librng/generator, 
-       librng/algorithms/[
-        xoroshiro128, splitmix64, lcg, mersenne_twister, 
-        marsaglia_69069, lehmer64
-       ],
-       std/[times, tables, strformat, sysrand]
+import
+  librng/generator,
+  librng/algorithms/[
+    xoroshiro128, splitmix64, lcg, mersenne_twister, marsaglia_69069, lehmer64
+  ],
+  std/[times, tables, strformat, sysrand]
 
 type
   ## An unrecoverable error that happens during the initialization of RNG.
@@ -20,7 +20,7 @@ type
 
   RNG* = ref object of RootObj
     seed*: uint64
-    
+
     smix: Splitmix64
     generator: Generator
 
@@ -34,30 +34,20 @@ proc initialize*(rng: RNG, algo: RNGAlgorithm) {.inline.} =
   rng.smix = newSplitmix64(rng.seed)
   case algo
   of Xoroshiro128:
-    rng.generator = newXoroshiro128(
-      rng.smix.next(),
-      rng.smix.next()
-    )
+    rng.generator = newXoroshiro128(rng.smix.next(), rng.smix.next())
   of Lehmer64:
-    rng.generator = newLehmer64(
-      rng.smix.next()
-    )
+    rng.generator = newLehmer64(rng.smix.next())
   of Marsaglia69069:
-    rng.generator = newMarsaglia69069(
-      rng.smix.next()
-    )
+    rng.generator = newMarsaglia69069(rng.smix.next())
   of LCG:
-    rng.generator = newLinearCongruentialGenerator(
-      rng.smix.next(),
-      rng.smix.next(),
-      rng.smix.next(),
-      rng.smix.next()
-    )
+    rng.generator =
+      newLinearCongruentialGenerator(
+        rng.smix.next(), rng.smix.next(), rng.smix.next(), rng.smix.next()
+      )
   of MersenneTwister:
-    rng.generator = newMersenneTwister(
-      rng.smix.next()
-    )
-  else: discard
+    rng.generator = newMersenneTwister(rng.smix.next())
+  else:
+    discard
 
 proc gen(rng: RNG): uint64 {.inline.} =
   ## Simply generates an unsigned 64 bit integer from the generator.
@@ -97,9 +87,7 @@ proc newRNG*(seed: uint64 = 0, algo: RNGAlgorithm = Xoroshiro128): RNG =
         else:
           raise newException(RNGInitializationDefect, "urandom() syscall failed!")
 
-  var rng = RNG(
-    seed: realSeed
-  )
+  var rng = RNG(seed: realSeed)
   rng.initialize(algo)
 
   rng

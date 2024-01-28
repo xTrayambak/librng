@@ -22,11 +22,11 @@ import ../generator
 type Marsaglia69069* = ref object of Generator
 
 method next*(m69069: Marsaglia69069): uint64 {.inline.} =
- let res = 69069 * (m69069.seed - 1) + 1234567
+  let res = 69069 * (m69069.seed - 1) + 1234567
 
- m69069.seed = res
+  m69069.seed = res
 
- res 
+  res
 
 proc newMarsaglia69069*(seed: uint64): Marsaglia69069 =
- Marsaglia69069(seed: seed)
+  Marsaglia69069(seed: seed)

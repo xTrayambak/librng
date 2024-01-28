@@ -6,10 +6,11 @@ var
   mersenne = newRNG(algo = MersenneTwister)
   marsaglia = newRNG(algo = Marsaglia69069)
 
-const libraries = [
-  "pixie", "fidget", "chame", "nimlsp", "jsony", "librng", "gintro",
-  "owlkettle", "nimcrypto"
-]
+const
+  libraries = [
+    "pixie", "fidget", "chame", "nimlsp", "jsony", "librng", "gintro", "owlkettle",
+    "nimcrypto"
+  ]
 
 echo "Xoroshiro128 likes: " & xoroshiro128.choice(libraries)
 echo "Lehmer64 likes: " & lehmer64.choice(libraries)
