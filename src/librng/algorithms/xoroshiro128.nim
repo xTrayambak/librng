@@ -1,4 +1,4 @@
-import generator, std/bitops
+import ../generator, std/bitops
 
 type Xoroshiro128* = ref object of Generator
 

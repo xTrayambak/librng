@@ -1,4 +1,5 @@
-import generator, std/[bitops, math]
+{.error: "Xoroshiro256** is still unstable and does not work.".}
+import ../generator, std/[bitops, math]
 
 type Xoroshiro256SS* = ref object of Generator
 

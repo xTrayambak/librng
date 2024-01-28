@@ -1,7 +1,7 @@
 #[
  Mersenne Twister implementation
 ]#
-import generator
+import ../generator
 
 const
  NN* = 312

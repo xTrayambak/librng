@@ -1,4 +1,4 @@
-import generator
+import ../generator
 
 type Lehmer64* = ref object of Generator
 

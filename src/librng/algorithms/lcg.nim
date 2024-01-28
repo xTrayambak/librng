@@ -1,4 +1,4 @@
-import generator
+import ../generator
 
 type LinearCongruentialGenerator* = ref object of Generator
  modulus: uint64

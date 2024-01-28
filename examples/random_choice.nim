@@ -1,14 +1,14 @@
 import librng
 
 let fruits = @[
- "apples",
- "bananas",
- "mangoes",
- "oranges",
- "pineapples",
- "litchees",
- "blueberries",
- "blackberries"
+  "apples",
+  "bananas",
+  "mangoes",
+  "oranges",
+  "pineapples",
+  "litchees",
+  "blueberries",
+  "blackberries"
 ]
 
 var rng = newRNG()

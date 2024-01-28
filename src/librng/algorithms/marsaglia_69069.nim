@@ -17,7 +17,7 @@
 
  This "RNG" algorithm was made by George Marsaglia.
 ]#
-import generator
+import ../generator
 
 type Marsaglia69069* = ref object of Generator
 
