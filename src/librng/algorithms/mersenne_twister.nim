@@ -1,6 +1,4 @@
-#[
- Mersenne Twister implementation
-]#
+## Mersenne Twister implementation
 import ../generator
 
 const

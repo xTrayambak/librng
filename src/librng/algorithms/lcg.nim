@@ -1,3 +1,5 @@
+## A linear congruential generator implementation.
+
 import ../generator
 
 type
