@@ -12,17 +12,20 @@ type
   ## An enum representing all of the algorithms that librng supports.
   RNGAlgorithm* = enum
     Xoroshiro128
+    Xoroshiro256SS
     Lehmer64
     Marsaglia69069
     Splitmix64
     LCG
     MersenneTwister
-
+  
+  ## A RNG helper object.
   RNG* = ref object of RootObj
-    seed*: uint64
+    seed*: uint64                ## The seed being used by the generator as the base value
 
-    smix: Splitmix64
-    generator: Generator
+    smix: Splitmix64             ## The Splitmix64 generator, necessary for "bootstrapping" the main generator (just used for getting multiple values
+                                 ## from the one seed the user provides)
+    generator: Generator         ## The PRNG algorithm generator
 
 proc `$`*(rng: RNG): string {.inline.} =
   ## Converts a RNG helper object into a string representation.
@@ -46,6 +49,8 @@ proc initialize*(rng: RNG, algo: RNGAlgorithm) {.inline.} =
       )
   of MersenneTwister:
     rng.generator = newMersenneTwister(rng.smix.next())
+  of Splitmix64:
+    rng.generator = rng.smix
   else:
     discard
 
