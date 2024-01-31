@@ -18,14 +18,15 @@ type
     Splitmix64
     LCG
     MersenneTwister
-  
+
   ## A RNG helper object.
   RNG* = ref object of RootObj
-    seed*: uint64                ## The seed being used by the generator as the base value
+    seed*: uint64 ## The seed being used by the generator as the base value
 
-    smix: Splitmix64             ## The Splitmix64 generator, necessary for "bootstrapping" the main generator (just used for getting multiple values
-                                 ## from the one seed the user provides)
-    generator: Generator         ## The PRNG algorithm generator
+    smix: Splitmix64
+      ## The Splitmix64 generator, necessary for "bootstrapping" the main generator (just used for getting multiple values
+      ## from the one seed the user provides)
+    generator: Generator ## The PRNG algorithm generator
 
 proc `$`*(rng: RNG): string {.inline.} =
   ## Converts a RNG helper object into a string representation.

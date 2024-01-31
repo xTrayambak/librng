@@ -10,4 +10,4 @@ type
 method next*(generator: Generator): uint64 {.base, inline.} =
   raise newException(
       UninitializedGeneratorDefect, "Generator does not implement a next() function"
-  )
+    )
