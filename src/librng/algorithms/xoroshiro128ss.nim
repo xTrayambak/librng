@@ -1,4 +1,4 @@
-## Xoroshiro128 implementation
+## Xoroshiro128** implementation
 
 import std/bitops, ../[shared, generator]
 

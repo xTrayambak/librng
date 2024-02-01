@@ -15,6 +15,7 @@ librng supports the C, C++, JS and NimScript* backends.
 | Marsaglia 69069  | yes            |
 | Lehmer64         | yes            |
 | Xoroshiro128**   | yes            |
+| Xoroshiro128++   | yes            |
 | ChaCha20         | no             |
 | PCG              | no             |
 
