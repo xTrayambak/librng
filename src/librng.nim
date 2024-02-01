@@ -1,7 +1,8 @@
 import
   librng/generator,
   librng/algorithms/[
-    xoroshiro128, splitmix64, lcg, mersenne_twister, marsaglia_69069, lehmer64
+    xoroshiro128, splitmix64, lcg, mersenne_twister, marsaglia_69069, lehmer64,
+    xoroshiro128ss
   ],
   std/[times, tables, strformat, sysrand]
 
@@ -12,7 +13,7 @@ type
   ## An enum representing all of the algorithms that librng supports.
   RNGAlgorithm* = enum
     Xoroshiro128
-    Xoroshiro256SS
+    Xoroshiro128StarStar
     Lehmer64
     Marsaglia69069
     Splitmix64
@@ -52,8 +53,8 @@ proc initialize*(rng: RNG, algo: RNGAlgorithm) {.inline.} =
     rng.generator = newMersenneTwister(rng.smix.next())
   of Splitmix64:
     rng.generator = rng.smix
-  else:
-    discard
+  of Xoroshiro128StarStar:
+    rng.generator = newXoroshiro128StarStar(rng.smix.next(), rng.smix.next())
 
 proc gen(rng: RNG): uint64 {.inline.} =
   ## Simply generates an unsigned 64 bit integer from the generator.

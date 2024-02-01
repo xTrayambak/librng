@@ -2,9 +2,9 @@
 
 import std/bitops, ../[shared, generator]
 
-type Xoroshiro128PlusPlus* = ref object of Generator
+type Xoroshiro128StarStar* = ref object of Generator
 
-method next*(xoroshiro: Xoroshiro128PlusPlus): uint64 {.inline.} =
+method next*(xoroshiro: Xoroshiro128StarStar): uint64 {.inline.} =
   let s0 = xoroshiro.state[0]
   var s1 = xoroshiro.state[1]
 
@@ -16,8 +16,8 @@ method next*(xoroshiro: Xoroshiro128PlusPlus): uint64 {.inline.} =
 
   res
 
-proc newXoroshiro128PlusPlus*(s1, s2: uint64): Xoroshiro128PlusPlus =
+proc newXoroshiro128StarStar*(s1, s2: uint64): Xoroshiro128StarStar =
   var state: array[0..64, uint64]
   state[0] = s1
   state[1] = s2
-  Xoroshiro128PlusPlus(state: state)
+  Xoroshiro128StarStar(state: state)
