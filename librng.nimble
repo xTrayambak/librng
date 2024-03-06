@@ -10,7 +10,7 @@ srcDir        = "src"
 # Dependencies
 
 requires "nim >= 1.6.12"
-requires "nph >= 0.3.0"
+taskRequires "format", "nph >= 0.3.0"
 
 task format, "Format code using nph":
   exec "nph src/"
