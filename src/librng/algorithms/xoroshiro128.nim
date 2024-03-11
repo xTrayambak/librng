@@ -15,7 +15,7 @@ method next*(xoroshiro: Xoroshiro128): uint64 {.inline.} =
 
   res
 
-proc newXoroshiro128*(s1, s2: uint64): Xoroshiro128 =
+proc newXoroshiro128*(s1, s2: uint64): Xoroshiro128 {.inline.} =
   var state: array[0..64, uint64]
   state[0] = s1
   state[1] = s2

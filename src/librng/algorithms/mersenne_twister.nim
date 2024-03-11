@@ -63,7 +63,6 @@ proc fillNextState*(mt: MersenneTwister) {.inline.} =
   mt.idx = 0
 
 method next*(mt: MersenneTwister): uint64 {.inline.} =
-  # raise newException(GeneratorWorkInProgressDefect, "Mersenne Twister is still work-in-progress. Consider helping out if you want. Sorry!")
   if mt.idx == 0:
     raise newException(
         UninitializedGeneratorDefect, "next() called without initializing generator!"
@@ -77,7 +76,7 @@ method next*(mt: MersenneTwister): uint64 {.inline.} =
 
   temper(x)
 
-proc newMersenneTwister*(seed: uint64): MersenneTwister =
+proc newMersenneTwister*(seed: uint64): MersenneTwister {.inline.} =
   var state: array[NN, uint64]
 
   state[0] = seed

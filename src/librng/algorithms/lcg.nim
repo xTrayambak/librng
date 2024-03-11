@@ -1,4 +1,5 @@
-## A linear congruential generator implementation.
+## A very basic linear congruential generator implementation.
+## Only use this if speed matters to you more than the quality of the numbers!
 
 import ../generator
 
@@ -16,5 +17,5 @@ method next*(lcg: LinearCongruentialGenerator): uint64 {.inline.} =
 
 proc newLinearCongruentialGenerator*(
     seed, modulus, mult, incr: uint64
-): LinearCongruentialGenerator =
+): LinearCongruentialGenerator {.inline.} =
   LinearCongruentialGenerator(seed: seed, modulus: modulus, mult: mult, incr: incr)

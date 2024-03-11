@@ -1,6 +1,6 @@
 ## Xoroshiro128++ implementation
 
-import std/bitops, ../[shared, generator]
+import ../[shared, generator]
 
 type Xoroshiro128PlusPlus* = ref object of Generator
 
@@ -17,7 +17,7 @@ method next*(xoroshiro: Xoroshiro128PlusPlus): uint64 {.inline.} =
 
   res
 
-proc newXoroshiro128PlusPlus*(s1, s2: uint64): Xoroshiro128PlusPlus =
+proc newXoroshiro128PlusPlus*(s1, s2: uint64): Xoroshiro128PlusPlus {.inline.} =
   var state: array[0..64, uint64]
   state[0] = s1
   state[1] = s2

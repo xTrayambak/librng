@@ -15,5 +15,5 @@ method next*(sm64: Splitmix64): uint64 {.inline.} =
 
   sm64.seed = result
 
-proc newSplitmix64*(seed: var uint64 = 0): Splitmix64 =
+proc newSplitmix64*(seed: uint64 = 0): Splitmix64 {.inline.} =
   Splitmix64(seed: seed)

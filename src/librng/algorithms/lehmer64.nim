@@ -1,3 +1,6 @@
+## Lehmer64 generator implementation
+## This LCG was made by D. H. Lehmer
+
 import ../generator
 
 type Lehmer64* = ref object of Generator
@@ -10,5 +13,5 @@ method next*(lehmer64: Lehmer64): uint64 {.inline.} =
 
   val
 
-proc newLehmer64*(seed: uint64): Lehmer64 =
+proc newLehmer64*(seed: uint64): Lehmer64 {.inline.} =
   Lehmer64(seed: seed)
