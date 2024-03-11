@@ -7,6 +7,7 @@ var
   marsaglia = newRNG(algo = Marsaglia69069)
   lcg = newRNG(algo = LCG)
   smix64 = newRNG(algo = Splitmix64)
+  pcg = newRNG(algo = PCG)
 
 const
   libraries = [
@@ -20,3 +21,4 @@ echo "Mersenne Twister likes: " & mersenne.choice(libraries)
 echo "Marsaglia69069 likes: " & marsaglia.choice(libraries)
 echo "LCG likes: " & lcg.choice(libraries)
 echo "Splitmix64 likes: " & smix64.choice(libraries)
+echo "PCG likes: " & pcg.choice(libraries)

@@ -8,16 +8,16 @@ librng supports the C, C++, JS and NimScript* backends.
 # RNG Algorithms supported
 | Algorithm        | Status         |
 | ---------        | ------         |
-| Xoroshiro128     | yes            |
-| LCG              | yes            |
-| Splitmix64       | yes            |
-| Mersenne Twister | yes            |
-| Marsaglia 69069  | yes            |
-| Lehmer64         | yes            |
-| Xoroshiro128**   | yes            |
-| Xoroshiro128++   | yes            |
-| ChaCha20         | no             |
-| PCG              | no             |
+| Xoroshiro128     | Yes            |
+| LCG              | Yes            |
+| Splitmix64       | Yes            |
+| Mersenne Twister | Yes            |
+| Marsaglia 69069  | Yes            |
+| Lehmer64         | Yes            |
+| Xoroshiro128**   | Yes            |
+| Xoroshiro128++   | Yes            |
+| PCG              | Yes            |
+| ChaCha20         | No             |
 
 # Installation
 You can install librng straight from Nimble.
@@ -25,8 +25,9 @@ You can install librng straight from Nimble.
 $ nimble install librng
 ```
 
-# Contributing
-Please run the `nimble format` task to run `nph` before submitting your contributions. Thanks :)
-
 # Examples
-All examples are in `examples/`
+All examples are in `examples/`. They should give you an idea of how to use the library.
+
+# Contributing
+Make sure to write unit tests if you're adding a new algorithm. This allows us to integrate it easily into the GitHub Actions tests.
+Please run the `nimble format` task to run `nph` before submitting your contributions. Thanks :)
