@@ -2,7 +2,7 @@ import
   librng/generator,
   librng/algorithms/[
     xoroshiro128, splitmix64, lcg, mersenne_twister, marsaglia_69069, lehmer64,
-    xoroshiro128ss, xoroshiro128pp
+    xoroshiro128ss, xoroshiro128pp, pcg64
   ],
   std/[times, tables, strformat, sysrand]
 
@@ -20,6 +20,7 @@ type
     Splitmix64
     LCG
     MersenneTwister
+    PCG
 
   ## A RNG helper object.
   RNG* = ref object of RootObj
@@ -58,6 +59,8 @@ proc initialize*(rng: RNG, algo: RNGAlgorithm) {.inline.} =
     rng.generator = newXoroshiro128StarStar(rng.smix.next(), rng.smix.next())
   of Xoroshiro128PlusPlus:
     rng.generator = newXoroshiro128PlusPlus(rng.smix.next(), rng.smix.next())
+  of PCG:
+    rng.generator = newPCG64(rng.smix.next())
 
 proc gen(rng: RNG): uint64 {.inline.} =
   ## Simply generates an unsigned 64 bit integer from the generator.
