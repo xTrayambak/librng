@@ -3,7 +3,7 @@ import unittest
 import librng
 import ./shared
 
-test "linear congruential generator":
+suite "linear congruential generator":
   var rng = newRNG(algo = LCG)
   test "numbers":
     for n in 0..32:

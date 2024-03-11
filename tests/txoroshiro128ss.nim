@@ -3,7 +3,7 @@ import unittest
 import librng
 import ./shared
 
-test "xoroshiro128**":
+suite "xoroshiro128**":
   var rng = newRNG(algo = Xoroshiro128StarStar)
   test "numbers":
     for n in 0..32:

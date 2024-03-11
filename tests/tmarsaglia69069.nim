@@ -3,7 +3,7 @@ import unittest
 import librng
 import ./shared
 
-test "marsaglia 69069":
+suite "marsaglia 69069":
   var rng = newRNG(algo = Marsaglia69069)
   test "numbers":
     for n in 0..32:

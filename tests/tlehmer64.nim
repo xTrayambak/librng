@@ -3,7 +3,7 @@ import unittest
 import librng
 import ./shared
 
-test "lehmer64":
+suite "lehmer64":
   var rng = newRNG(algo = Lehmer64)
   test "numbers":
     for n in 0..32:

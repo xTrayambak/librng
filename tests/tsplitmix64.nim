@@ -3,7 +3,7 @@ import unittest
 import librng
 import ./shared
 
-test "splitmix64":
+suite "splitmix64":
   var rng = newRNG(algo = Splitmix64)
   test "numbers":
     for n in 0..32:

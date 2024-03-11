@@ -3,7 +3,7 @@ import unittest
 import librng
 import ./shared
 
-test "mersenne twister":
+suite "mersenne twister":
   var rng = newRNG(algo = MersenneTwister)
   test "numbers":
     for n in 0..32:
